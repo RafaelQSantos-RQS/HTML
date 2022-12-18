@@ -1,0 +1,99 @@
+<meta charset="utf-8">
+<h1>Jogo do Come-Come</h1>
+<canvas width="600" height="400"></canvas>
+<br>
+Escolha a cor do Come-Come:
+<input type="color">
+
+<script type="text/javascript">
+	var tela = document.querySelector('canvas');
+	var pincel = tela.getContext('2d');
+	var cor = document.querySelector('input');
+	//Variaveis do come come
+	var x = 300;
+	var y = 200;
+	var raio = 10;
+	var taxa = 10;
+
+	// Variaveis da comida
+	var xcomida = Math.floor(Math.random()*600);
+	var ycomida = Math.floor(Math.random()*400);
+
+	// Variaveis dos direcionais
+	var esquerda = 37;
+	var cima = 38;
+	var direita = 39;
+	var baixo = 40;
+
+	var pontos = 0; // Pontuação do jogador
+
+	// Função para mudar a cor do fundo
+	function fundo(){
+		pincel.fillStyle = 'lightgray';
+    	pincel.fillRect(0, 0, 600, 400);
+	}
+
+	// Função para desenhar circulos
+	function circulo(x, y, raio, cor_circulo){
+		pincel.fillStyle = cor_circulo;
+		pincel.beginPath();
+		pincel.arc(x, y, raio, 0, 2*Math.PI);
+		pincel.fill();
+	}
+
+	// Função para limpar a tela
+	function limpar(){
+		pincel.clearRect(0, 0, 600, 400);
+	}
+
+	// Função para mover o ComeCome
+	function mover(){
+		limpar();
+		fundo();
+		comer();
+		circulo(x, y, raio, cor.value); // O Come-Come
+		pontuacao();
+	}
+
+	//Lógica para comer a comida
+	function comer(){
+		circulo(xcomida,ycomida,10, 'green'); // Desenho da comida
+		if( (x >= xcomida - raio) && (x <= xcomida + raio) && (y >= ycomida - raio) && (y <= ycomida + raio)){
+			xcomida = Math.floor(Math.random()*600)
+			ycomida = Math.floor(Math.random()*400)
+			raio +=5;
+			pontos++;
+		}
+	}
+
+	// Função para mover o Come-Come
+	document.onkeydown = function(evento){
+        if(evento.keyCode == cima) {
+
+            y = y - taxa;
+
+        } else if (evento.keyCode == baixo) {
+
+            y = y + taxa;
+
+        } else if (evento.keyCode == esquerda) {
+
+            x = x - taxa;
+
+        } else if (evento.keyCode == direita) {
+
+            x = x + taxa;
+        }
+	}
+
+	// Função para escrever a pontuação
+	function pontuacao(){
+		pincel.fillStyle = 'black';
+		pincel.font = "bold 20px Georgia";
+		pincel.textBaseline = "top";
+		pincel.textAlign = "center";
+		pincel.fillText("Pontuação: " + pontos, 300, 12.5);
+	}
+
+	setInterval(mover, 20);
+</script>

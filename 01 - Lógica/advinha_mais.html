@@ -1,0 +1,62 @@
+<meta charset="utf-8">
+
+<h1>Joguinho da advinhação</h1>
+<input/>
+<br>
+<button>Comparar</button>
+
+<script> 
+	var segredos = []; // Variável que armazena os valores
+	var input = document.querySelector("input"); // Puxa o valor escrito na caixinha (input)
+	var button = document.querySelector("button"); // Puxa o botão (button)
+
+	function sorteio(){
+		return Math.round(Math.random()*10);
+	}
+
+	function insere_numero(quantidade){
+		var contador = 1;
+
+		while(contador<=quantidade){
+			var achou = false; // Flag de teste para inserir o valor no array segredos
+			var numero = sorteio();
+
+			for(var pos = 0;pos < segredos.length; pos++){
+				if(segredos[pos] == numero){
+					achou = true;
+					break;
+				}
+			}
+
+			if (achou == false){
+				segredos.push(numero);
+				contador++;
+			}
+		}
+
+	}
+
+	insere_numero(5);
+	console.log(segredos);
+	input.focus();
+	button.onclick = function(){
+		var achou = false;
+
+		for(var posicao = 0;posicao<segredos.length;posicao++){
+			if(input.value == segredos[posicao]){
+				alert("Você acertou!!!!!!");
+				achou = true;
+				break;
+			}
+
+		}
+
+		if(achou == false){ 
+			alert("Você errou!!!!!!");
+		}
+
+		input.value = "";
+		input.focus();
+	}
+	
+</script>

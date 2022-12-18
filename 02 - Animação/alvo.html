@@ -1,0 +1,61 @@
+<meta charset="utf-8">
+<h1> Jogo tiro ao alvo</h1>
+<canvas width="600" height="400"></canvas>
+
+<script type="text/javascript">
+	var tela = document.querySelector('canvas');
+	var pincel = tela.getContext('2d');
+	var raio = 10;
+	var pontos = 0;
+	var xAleatorio;
+	var yAleatorio;
+
+	// Desenho do fundo
+	pincel.fillStyle = 'blue';
+	pincel.fillRect(0, 0, 600, 400);
+
+	// Desenhando circulos
+	function circulo(x, y, raio, cor){
+		pincel.fillStyle = cor;
+		pincel.beginPath();
+		pincel.arc(x, y, raio, 0, 2*Math.PI);
+		pincel.fill();		
+	}
+
+	// Lógica de acerto
+	tela.onclick = function (evento){
+		var x = evento.pageX - tela.offsetLeft;
+		var y = evento.pageY - tela.offsetTop;
+		if( (x >= xAleatorio - raio) && (x <= xAleatorio + raio) && (y >= yAleatorio - raio) && (y <= yAleatorio + raio)){
+			pontos++;
+			alert("Acertou!! Pontuação = " + pontos);
+		}
+	}
+
+	// Função para limpar a tela
+	function limpar(){
+		pincel.clearRect(0, 0, 600, 400);
+	}
+
+	// Função para animar a tela
+	function alvo(x, y){
+		circulo(x, y, raio + 20, "red");
+		circulo(x, y, raio + 10, "white");
+		circulo(x, y, raio, "red");
+	}
+
+	// Função que muda a posição
+	function posicao(maximo){
+		return Math.floor(Math.random()*maximo);
+	}
+
+	//Função para mudar anima a mudança de posição
+	function atualizar(){
+		limpar();
+		xAleatorio = posicao(600);
+		yAleatorio = posicao(400);
+		alvo(xAleatorio,yAleatorio);
+	}
+
+	setInterval(atualizar,1000);
+</script>
