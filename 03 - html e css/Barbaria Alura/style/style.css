@@ -172,6 +172,7 @@ body {
     font-size: 2em;
     margin: 0 0 1em;
     clear: left;
+    color: rgba(0,0,0,0.3);
 }
 
 .principal p {
@@ -222,6 +223,13 @@ body {
 
 .Imagem-Beneficios {
     width: 60%;
+    opacity: 0.3;
+    transition: 400ms;
+    box-shadow: 10px 10px 5px #000;
+}
+
+.Imagem-Beneficios:hover {
+    opacity: 1;
 }
 
 .video {
@@ -242,4 +250,20 @@ body {
 .mapa-conteudo {
     width: 940px;
     margin: 0px auto;
+}
+
+@media screen and (max-width: 480px){
+    .caixa, .principal, .conteudo-beneficios, .mapa-conteudo, .video {
+        width: auto;
+    }
+    h1 {
+        text-align: center;
+    }
+    nav {
+        position: static;
+    }
+
+    .lista-beneficios, .Imagem-Beneficios {
+        width: 100%;
+    }
 }
